@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.WebApplicationContext;
 
 @RestController
+@RequestMapping("/record")
 @Api("债权人基础信息")
 @Retryable(value = Exception.class, maxAttempts = 3)
 public class RecordController {
@@ -28,7 +29,7 @@ public class RecordController {
     })
     @RequestMapping(
             value = "/getFinishBasicInfo/CreditorId/{CreditorId}",
-            method = {RequestMethod.GET, RequestMethod.OPTIONS},
+            method = {RequestMethod.GET},
             produces = "application/json;charset=UTF-8"
     )
     public ResponseEntity<?> getFinishBasicInfo(@PathVariable String CreditorId) {
