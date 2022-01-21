@@ -9,6 +9,6 @@ import org.springframework.stereotype.Service;
 public class RecordServiceImpl implements RecordService {
     @Override
     public ResponseEntity<?> getFinishBasicInfo(String CreditorId) {
-        return new ResponseEntity<>(CreditorId+" received", HttpStatus.OK);
+        return new ResponseEntity<>(CreditorId+" received!!!!!!!", HttpStatus.OK);
     }
 }

@@ -25,8 +25,8 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("债权部分的接口文档")
-                .description("债权申报，审查，核查")
+                .title("Documentation for API of record service")
+                .description("Swagger")
                 .termsOfServiceUrl("https://casecloud.com.cn")
                 .version("1.0")
                 .build();
