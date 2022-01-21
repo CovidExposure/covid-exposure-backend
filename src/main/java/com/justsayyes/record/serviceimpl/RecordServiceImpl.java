@@ -19,6 +19,6 @@ public class RecordServiceImpl implements RecordService {
     public ResponseEntity<?> getLocationIndex(LocationInfoDTO locationInfoDTO) {
         Location l=new Location(locationInfoDTO);
         applicationContext.getBean(LocationRepository.class).save(l);
-        return new ResponseEntity<>(l.getId()+" received!!!!!!!", HttpStatus.OK);
+        return new ResponseEntity<>(l.getId(), HttpStatus.OK);
     }
 }
