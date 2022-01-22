@@ -1,5 +1,6 @@
 package com.justsayyes.record.controller;
 import com.justsayyes.record.DTO.LocationInfoDTO;
+import com.justsayyes.record.DTO.RecordDTO;
 import com.justsayyes.record.service.RecordService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -32,5 +33,19 @@ public class RecordController {
     public ResponseEntity<?> getIndexForLocations(@RequestBody LocationInfoDTO locationInfoDTO) {
         return applicationContext.getBean(RecordService.class).getLocationIndex(locationInfoDTO);
     }
+
+    @ApiOperation(value = "Upload visitor record")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "ok", response = Boolean.class)
+    })
+    @RequestMapping(
+            value = "/uploadRecord",
+            method = {RequestMethod.POST},
+            produces = "application/json;charset=UTF-8"
+    )
+    public ResponseEntity<?> uploadRecord(@RequestBody RecordDTO recordDTO) {
+        return applicationContext.getBean(RecordService.class).uploadRecord(recordDTO);
+    }
+
 
 }
