@@ -31,6 +31,8 @@ public class RecordServiceImpl implements RecordService {
 
     @Override
     public ResponseEntity<?> uploadRecord(RecordDTO recordDTO) {
+        Optional<Location> l=applicationContext.getBean(LocationRepository.class).findById(Long.parseLong(recordDTO.getLocationId()));
+        if(!l.isPresent()) return new ResponseEntity<>(false,HttpStatus.BAD_REQUEST);
         Optional<Visitor> v=applicationContext.getBean(VisitorRepository.class).findById(recordDTO.getEmail());
         Visitor visitor=new Visitor();
         if(!v.isPresent()){

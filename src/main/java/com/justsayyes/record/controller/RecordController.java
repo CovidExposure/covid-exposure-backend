@@ -36,7 +36,8 @@ public class RecordController {
 
     @ApiOperation(value = "Upload visitor record")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "ok", response = Boolean.class)
+            @ApiResponse(code = 200, message = "ok", response = Boolean.class),
+            @ApiResponse(code = 400, message = "bad request", response = Boolean.class)
     })
     @RequestMapping(
             value = "/uploadRecord",
