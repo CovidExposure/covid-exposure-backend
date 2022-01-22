@@ -7,6 +7,7 @@ import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -24,5 +25,5 @@ public class Visitor {
     String status;
 
     @OneToMany(mappedBy = "visitor")
-    private List<Record> records;
+    private List<Record> records=new ArrayList<>();
 }
