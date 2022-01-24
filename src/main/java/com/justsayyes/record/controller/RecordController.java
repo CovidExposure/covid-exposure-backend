@@ -2,6 +2,7 @@ package com.justsayyes.record.controller;
 import com.justsayyes.record.DTO.LocationInfoDTO;
 import com.justsayyes.record.DTO.RecordDTO;
 import com.justsayyes.record.DTO.StatusDTO;
+import com.justsayyes.record.DTO.TestDTO;
 import com.justsayyes.record.service.RecordService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -15,7 +16,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 @RestController
 @RequestMapping("/record")
-@Api("债权人基础信息")
+@Api("controller for uploading record and test results")
 @Retryable(value = Exception.class, maxAttempts = 3)
 public class RecordController {
 
@@ -51,8 +52,8 @@ public class RecordController {
 
     @ApiOperation(value = "Upload covid test result ( positive or negative ) timestamp is optional,in milliseconds UTC")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "ok", response = Boolean.class),
-            @ApiResponse(code = 400, message = "bad request", response = Boolean.class)
+            @ApiResponse(code = 200, message = "ok", response = TestDTO.class),
+            @ApiResponse(code = 400, message = "bad request", response = TestDTO.class)
     })
     @RequestMapping(
             value = "/uploadStatus",

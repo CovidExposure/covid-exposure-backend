@@ -55,7 +55,7 @@ public class RecordServiceImpl implements RecordService {
         Visitor visitor=v.get();
         visitor.setStatus(statusDTO.getStatus());
         applicationContext.getBean(VisitorRepository.class).save(visitor);
-        return new ResponseEntity<>(true,HttpStatus.OK);
+        return new ResponseEntity<>(getExposureList(statusDTO.getEmail()),HttpStatus.OK);
 
     }
 
