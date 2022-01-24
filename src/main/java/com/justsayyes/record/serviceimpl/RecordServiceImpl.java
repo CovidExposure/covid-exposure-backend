@@ -76,7 +76,7 @@ public class RecordServiceImpl implements RecordService {
             locationIds.add(records.get(i).getLocationId());
         }
         List<Record> exposed=applicationContext.getBean(RecordRepository.class)
-                .getRecordByLocationIdInAndCreateDateBetween(locationIds,new Date(),new Date(new Date().getTime()-15 * 60 * 60 * 24));
+                .getRecordByLocationIdInAndCreateDateBetween(locationIds,new Date(new Date().getTime()-15 * 60 * 60 * 24),new Date());
         Set<String> names=new HashSet<>();
         for(Record r:exposed){
             names.add(r.getVisitor().getEmail());
