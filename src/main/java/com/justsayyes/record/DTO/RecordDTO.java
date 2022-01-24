@@ -12,4 +12,5 @@ import javax.persistence.Column;
 public class RecordDTO {
     private String email;
     private String locationId;
+    private String timestamp;
 }

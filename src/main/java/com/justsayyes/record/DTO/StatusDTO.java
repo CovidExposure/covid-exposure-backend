@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class StatusDTO {
     private String email;
     private String status;
+    private String timestamp;
 }

@@ -35,7 +35,7 @@ public class RecordController {
         return applicationContext.getBean(RecordService.class).getLocationIndex(locationInfoDTO);
     }
 
-    @ApiOperation(value = "Upload visitor record")
+    @ApiOperation(value = "Upload visitor record, timestamp is optional, in milliseconds UTC ")
     @ApiResponses({
             @ApiResponse(code = 200, message = "ok", response = Boolean.class),
             @ApiResponse(code = 400, message = "bad request", response = Boolean.class)
@@ -49,7 +49,7 @@ public class RecordController {
         return applicationContext.getBean(RecordService.class).uploadRecord(recordDTO);
     }
 
-    @ApiOperation(value = "Upload covid test result ( positive or negative )")
+    @ApiOperation(value = "Upload covid test result ( positive or negative ) timestamp is optional,in milliseconds UTC")
     @ApiResponses({
             @ApiResponse(code = 200, message = "ok", response = Boolean.class),
             @ApiResponse(code = 400, message = "bad request", response = Boolean.class)

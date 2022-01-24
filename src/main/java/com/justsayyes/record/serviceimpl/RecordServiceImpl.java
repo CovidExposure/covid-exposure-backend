@@ -16,7 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class RecordServiceImpl implements RecordService {
@@ -56,6 +56,27 @@ public class RecordServiceImpl implements RecordService {
         visitor.setStatus(statusDTO.getStatus());
         applicationContext.getBean(VisitorRepository.class).save(visitor);
         return new ResponseEntity<>(true,HttpStatus.OK);
+
+    }
+
+    @Override
+    public List<String> getExposureList(String email) {
+        List<String> ans=new ArrayList<>();
+        Optional<Visitor> v=applicationContext.getBean(VisitorRepository.class).findById(email);
+        if(!v.isPresent()) return ans;
+        Visitor visitor=v.get();
+        List<Record> records=visitor.getRecords();
+        records.sort(Comparator.comparing(Record::getCreateDate));
+        Set<Long> locationIds=new HashSet<>();
+        for(int i=records.size()-1;i>=0;i--){
+            Date now=new Date();
+            if(now.getTime()-records.get(i).getCreateDate().getTime()>=15 * 60 * 60 * 24){
+                break;
+            }
+            locationIds.add(records.get(i).getLocationId());
+        }
+
+
 
     }
 }

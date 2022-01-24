@@ -7,9 +7,12 @@ import com.justsayyes.record.Entity.Record;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public interface RecordService {
     ResponseEntity<?> getLocationIndex(LocationInfoDTO locationInfoDTO);
     ResponseEntity<?> uploadRecord(RecordDTO recordDTO);
     ResponseEntity<?> uploadStatus(StatusDTO statusDTO);
+    List<String> getExposureList(String email);
 }
