@@ -27,9 +27,8 @@ public class Visitor {
     @Column
     String status;
 
-    @UpdateTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "update_date")
+
+    @Column
     private Date updateDate;
 
     @OneToMany(mappedBy = "visitor")

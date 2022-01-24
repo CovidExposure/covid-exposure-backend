@@ -30,13 +30,17 @@ public class Record {
 
     @Column(nullable = false)
     private Long locationId;
-    @CreationTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
+
     @Column
     private Date createDate;
 
     public Record(RecordDTO recordDTO,Visitor v){
         this.visitor=v;
         this.locationId=Long.parseLong(recordDTO.getLocationId());
+        if(!recordDTO.getTimestamp().equals("")){
+            this.createDate=new Date(Long.parseLong(recordDTO.getTimestamp()));
+        }else{
+            this.createDate=new Date();
+        }
     }
 }
