@@ -1,6 +1,7 @@
 package com.justsayyes.record.controller;
 import com.justsayyes.record.DTO.LocationInfoDTO;
 import com.justsayyes.record.DTO.RecordDTO;
+import com.justsayyes.record.DTO.StatusDTO;
 import com.justsayyes.record.service.RecordService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -48,5 +49,18 @@ public class RecordController {
         return applicationContext.getBean(RecordService.class).uploadRecord(recordDTO);
     }
 
+    @ApiOperation(value = "Upload covid test result ( positive or negative )")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "ok", response = Boolean.class),
+            @ApiResponse(code = 400, message = "bad request", response = Boolean.class)
+    })
+    @RequestMapping(
+            value = "/uploadStatus",
+            method = {RequestMethod.POST},
+            produces = "application/json;charset=UTF-8"
+    )
+    public ResponseEntity<?> uploadStatus(@RequestBody StatusDTO statusDTO) {
+        return applicationContext.getBean(RecordService.class).uploadStatus(statusDTO);
+    }
 
 }

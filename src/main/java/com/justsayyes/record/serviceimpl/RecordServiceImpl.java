@@ -2,6 +2,7 @@ package com.justsayyes.record.serviceimpl;
 
 import com.justsayyes.record.DTO.LocationInfoDTO;
 import com.justsayyes.record.DTO.RecordDTO;
+import com.justsayyes.record.DTO.StatusDTO;
 import com.justsayyes.record.Entity.Location;
 import com.justsayyes.record.Entity.Record;
 import com.justsayyes.record.Entity.Visitor;
@@ -45,5 +46,16 @@ public class RecordServiceImpl implements RecordService {
         applicationContext.getBean(VisitorRepository.class).save(visitor);
         applicationContext.getBean(RecordRepository.class).save(r);
         return new ResponseEntity<>(true,HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<?> uploadStatus(StatusDTO statusDTO) {
+        Optional<Visitor> v=applicationContext.getBean(VisitorRepository.class).findById(statusDTO.getEmail());
+        if(!v.isPresent())return new ResponseEntity<>(false,HttpStatus.BAD_REQUEST);
+        Visitor visitor=v.get();
+        visitor.setStatus(statusDTO.getStatus());
+        applicationContext.getBean(VisitorRepository.class).save(visitor);
+        return new ResponseEntity<>(true,HttpStatus.OK);
+
     }
 }
