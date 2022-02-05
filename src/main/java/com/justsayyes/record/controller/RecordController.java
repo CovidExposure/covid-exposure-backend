@@ -1,8 +1,5 @@
 package com.justsayyes.record.controller;
-import com.justsayyes.record.DTO.LocationInfoDTO;
-import com.justsayyes.record.DTO.RecordDTO;
-import com.justsayyes.record.DTO.StatusDTO;
-import com.justsayyes.record.DTO.TestDTO;
+import com.justsayyes.record.DTO.*;
 import com.justsayyes.record.service.RecordService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -63,5 +60,34 @@ public class RecordController {
     public ResponseEntity<?> uploadStatus(@RequestBody StatusDTO statusDTO) {
         return applicationContext.getBean(RecordService.class).uploadStatus(statusDTO);
     }
+
+    @ApiOperation(value = "getHeapMap of all time, active cases in timestamp for every location")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "ok", response = HeatMapDTO.class),
+            @ApiResponse(code = 400, message = "bad request", response = HeatMapDTO.class)
+    })
+    @RequestMapping(
+            value = "/getHeatMap",
+            method = {RequestMethod.GET},
+            produces = "application/json;charset=UTF-8"
+    )
+    public ResponseEntity<?> getHeatMap() {
+        return applicationContext.getBean(RecordService.class).getHeatMap();
+    }
+
+    @ApiOperation(value = "getHeapMap between , active cases numbers for every location")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "ok", response = HeatMapDTO.class),
+            @ApiResponse(code = 400, message = "bad request", response = HeatMapDTO.class)
+    })
+    @RequestMapping(
+            value = "/getHeatMapBetween",
+            method = {RequestMethod.POST},
+            produces = "application/json;charset=UTF-8"
+    )
+    public ResponseEntity<?> getHeatMapBetween(@RequestBody HeatMapRequestDTO heatMapRequestDTO) {
+        return applicationContext.getBean(RecordService.class).getHeatMapBetween(heatMapRequestDTO.getStart(),heatMapRequestDTO.getEnd());
+    }
+
 
 }
