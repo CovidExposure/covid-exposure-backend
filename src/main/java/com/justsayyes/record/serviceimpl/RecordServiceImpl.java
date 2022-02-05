@@ -1,8 +1,6 @@
 package com.justsayyes.record.serviceimpl;
 
-import com.justsayyes.record.DTO.LocationInfoDTO;
-import com.justsayyes.record.DTO.RecordDTO;
-import com.justsayyes.record.DTO.StatusDTO;
+import com.justsayyes.record.DTO.*;
 import com.justsayyes.record.Entity.Location;
 import com.justsayyes.record.Entity.Record;
 import com.justsayyes.record.Entity.Visitor;
@@ -57,6 +55,34 @@ public class RecordServiceImpl implements RecordService {
         applicationContext.getBean(VisitorRepository.class).save(visitor);
         return new ResponseEntity<>(getExposureList(statusDTO.getEmail()),HttpStatus.OK);
 
+    }
+
+    @Override
+    public ResponseEntity<?> getHeatMap() {
+        HeatMapDTO heatMapDTO=new HeatMapDTO();
+        for(Location l:applicationContext.getBean(LocationRepository.class).findAll()){
+            HeatMapDetailDTO heatMapDetailDTO=new HeatMapDetailDTO();
+            heatMapDetailDTO.setLocationId(l.getId().toString());
+            List<Record> records=applicationContext.getBean(RecordRepository.class).getRecordByLocationIdAndStatusOrderByCreateDate(l.getId(),"ACTIVE");
+            for(Record record:records){
+                heatMapDetailDTO.getStatics().add(record.getCreateDate().getTime());
+            }
+        }
+        return new ResponseEntity<>(heatMapDTO,HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<?> getHeatMapBetween(Long start, Long end) {
+        Date begin=new Date(start);
+        Date stop=new Date(end);
+        HeatMapDTO heatMapDTO=new HeatMapDTO();
+        for(Location l:applicationContext.getBean(LocationRepository.class).findAll()){
+            HeatMapDetailDTO heatMapDetailDTO=new HeatMapDetailDTO();
+            heatMapDetailDTO.setLocationId(l.getId().toString());
+            long num=applicationContext.getBean(RecordRepository.class).countByLocationIdAndStatusAndCreateDateBetween(l.getId(),"ACTIVE",begin,stop);
+            heatMapDetailDTO.setNumber(String.valueOf(num));
+        }
+        return new ResponseEntity<>(heatMapDTO,HttpStatus.OK);
     }
 
     @Override
