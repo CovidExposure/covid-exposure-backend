@@ -12,6 +12,8 @@ import java.util.List;
 @NoArgsConstructor
 public class HeatMapDetailDTO {
     String locationId;
+    String latitude;
+    String longitude;
     List<Long> statics=new ArrayList<>(); //for frontend counting, better method
     String number;//for backend counting, naive method
 }
