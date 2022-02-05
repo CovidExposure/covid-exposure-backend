@@ -3,7 +3,6 @@ package com.justsayyes.record.service;
 import com.justsayyes.record.DTO.LocationInfoDTO;
 import com.justsayyes.record.DTO.RecordDTO;
 import com.justsayyes.record.DTO.StatusDTO;
-import com.justsayyes.record.Entity.Record;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -14,5 +13,6 @@ public interface RecordService {
     ResponseEntity<?> getLocationIndex(LocationInfoDTO locationInfoDTO);
     ResponseEntity<?> uploadRecord(RecordDTO recordDTO);
     ResponseEntity<?> uploadStatus(StatusDTO statusDTO);
+    void setSelfRecord(String email);
     List<String> getExposureList(String email);
 }

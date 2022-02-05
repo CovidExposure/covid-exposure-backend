@@ -34,6 +34,9 @@ public class Record {
     @Column
     private Date createDate;
 
+    @Column
+    private String status;
+
     public Record(RecordDTO recordDTO,Visitor v){
         this.visitor=v;
         this.locationId=Long.parseLong(recordDTO.getLocationId());
@@ -42,5 +45,6 @@ public class Record {
         }else{
             this.createDate=new Date();
         }
+        this.status="UNKNOWN";
     }
 }

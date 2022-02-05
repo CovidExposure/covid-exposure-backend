@@ -60,6 +60,25 @@ public class RecordServiceImpl implements RecordService {
     }
 
     @Override
+    public void setSelfRecord(String email) {
+        List<String> ans=new ArrayList<>();
+        Optional<Visitor> v=applicationContext.getBean(VisitorRepository.class).findById(email);
+        if(!v.isPresent()) return;
+        Visitor visitor=v.get();
+        List<Record> records=visitor.getRecords();
+        records.sort(Comparator.comparing(Record::getCreateDate));
+        for(int i=records.size()-1;i>=0;i--){
+            Date now=new Date();
+            if(now.getTime()-records.get(i).getCreateDate().getTime()>=15 * 60 * 60 * 24){
+                break;
+            }
+            records.get(i).setStatus("ACTIVE");
+            applicationContext.getBean(RecordRepository.class).save(records.get(i));
+        }
+
+    }
+
+    @Override
     public List<String> getExposureList(String email) {
         List<String> ans=new ArrayList<>();
         Optional<Visitor> v=applicationContext.getBean(VisitorRepository.class).findById(email);
@@ -79,8 +98,11 @@ public class RecordServiceImpl implements RecordService {
                 .getRecordByLocationIdInAndCreateDateBetween(locationIds,new Date(new Date().getTime()-15 * 60 * 60 * 24),new Date());
         Set<String> names=new HashSet<>();
         for(Record r:exposed){
+            r.setStatus("EXPOSED");
+            applicationContext.getBean(RecordRepository.class).save(r);
             names.add(r.getVisitor().getEmail());
         }
+        setSelfRecord(email);
         return new ArrayList<>(names);
 
     }
