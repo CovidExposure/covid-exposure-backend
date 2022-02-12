@@ -22,9 +22,9 @@ public class Location {
     @Column(nullable = false)
     @GeneratedValue
     private Long id;
-    @Column(nullable = false)
+    @Column(nullable = false,precision = 32,scale=16)
     private BigDecimal latitude;
-    @Column(nullable = false)
+    @Column(nullable = false,precision = 32,scale=16)
     private BigDecimal longitude;
     @Column
     private String name;
