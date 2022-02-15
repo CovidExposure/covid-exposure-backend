@@ -58,14 +58,14 @@ public class RecordServiceImpl implements RecordService {
     }
 
     @Override
-    public ResponseEntity<?> getHeatMap() {
+    public ResponseEntity<?> getHeatMap(String keyword) {
         HeatMapDTO heatMapDTO=new HeatMapDTO();
         for(Location l:applicationContext.getBean(LocationRepository.class).findAll()){
             HeatMapDetailDTO heatMapDetailDTO=new HeatMapDetailDTO();
             heatMapDetailDTO.setLocationId(l.getId().toString());
             heatMapDetailDTO.setLatitude(l.getLatitude().toString());
             heatMapDetailDTO.setLongitude(l.getLongitude().toString());
-            List<Record> records=applicationContext.getBean(RecordRepository.class).getRecordByLocationIdAndStatusOrderByCreateDate(l.getId(),"ACTIVE");
+            List<Record> records=applicationContext.getBean(RecordRepository.class).getRecordByLocationIdAndStatusOrderByCreateDate(l.getId(),keyword);
             for(Record record:records){
                 heatMapDetailDTO.getStatics().add(record.getCreateDate().getTime());
             }

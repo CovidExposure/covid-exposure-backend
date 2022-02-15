@@ -13,7 +13,7 @@ public interface RecordService {
     ResponseEntity<?> getLocationIndex(LocationInfoDTO locationInfoDTO);
     ResponseEntity<?> uploadRecord(RecordDTO recordDTO);
     ResponseEntity<?> uploadStatus(StatusDTO statusDTO);
-    ResponseEntity<?> getHeatMap();
+    ResponseEntity<?> getHeatMap(String keyword);
     ResponseEntity<?> getHeatMapBetween(Long start,Long end);
     void setSelfRecord(String email);
     List<String> getExposureList(String email);

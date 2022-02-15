@@ -67,12 +67,26 @@ public class RecordController {
             @ApiResponse(code = 400, message = "bad request", response = HeatMapDTO.class)
     })
     @RequestMapping(
-            value = "/getHeatMap",
+            value = "/getHeatMapByActiveCases",
             method = {RequestMethod.GET},
             produces = "application/json;charset=UTF-8"
     )
-    public ResponseEntity<?> getHeatMap() {
-        return applicationContext.getBean(RecordService.class).getHeatMap();
+    public ResponseEntity<?> getHeatMapByActiveCases() {
+        return applicationContext.getBean(RecordService.class).getHeatMap("ACTIVE");
+    }
+
+    @ApiOperation(value = "getHeapMap of all time, active cases in timestamp for every location")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "ok", response = HeatMapDTO.class),
+            @ApiResponse(code = 400, message = "bad request", response = HeatMapDTO.class)
+    })
+    @RequestMapping(
+            value = "/getHeatMapByExposedCases",
+            method = {RequestMethod.GET},
+            produces = "application/json;charset=UTF-8"
+    )
+    public ResponseEntity<?> getHeatMapByExposedCases() {
+        return applicationContext.getBean(RecordService.class).getHeatMap("EXPOSED");
     }
 
     @ApiOperation(value = "getHeapMap between , active cases numbers for every location")
