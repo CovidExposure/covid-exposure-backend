@@ -69,6 +69,7 @@ public class RecordServiceImpl implements RecordService {
             for(Record record:records){
                 heatMapDetailDTO.getStatics().add(record.getCreateDate().getTime());
             }
+            heatMapDTO.getHeatMapDetailDTOS().add(heatMapDetailDTO);
         }
         return new ResponseEntity<>(heatMapDTO,HttpStatus.OK);
     }
