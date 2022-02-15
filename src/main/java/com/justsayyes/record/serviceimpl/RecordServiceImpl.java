@@ -99,7 +99,7 @@ public class RecordServiceImpl implements RecordService {
         records.sort(Comparator.comparing(Record::getCreateDate));
         for(int i=records.size()-1;i>=0;i--){
             Date now=new Date();
-            if(now.getTime()-records.get(i).getCreateDate().getTime()>=15 * 60 * 60 * 24){
+            if(now.getTime()-records.get(i).getCreateDate().getTime()>=15 * 60 * 60 * 24*1000){
                 break;
             }
             records.get(i).setStatus("ACTIVE");
@@ -119,13 +119,13 @@ public class RecordServiceImpl implements RecordService {
         Set<Long> locationIds=new HashSet<>();
         for(int i=records.size()-1;i>=0;i--){
             Date now=new Date();
-            if(now.getTime()-records.get(i).getCreateDate().getTime()>=15 * 60 * 60 * 24){
+            if(now.getTime()-records.get(i).getCreateDate().getTime()>=15 * 60 * 60 * 24*1000){
                 break;
             }
             locationIds.add(records.get(i).getLocationId());
         }
         List<Record> exposed=applicationContext.getBean(RecordRepository.class)
-                .getRecordByLocationIdInAndCreateDateBetween(locationIds,new Date(new Date().getTime()-15 * 60 * 60 * 24),new Date());
+                .getRecordByLocationIdInAndCreateDateBetween(locationIds,new Date(new Date().getTime()-15 * 60 * 60 * 24*1000),new Date());
         Set<String> names=new HashSet<>();
         for(Record r:exposed){
             r.setStatus("EXPOSED");
