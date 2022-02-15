@@ -15,5 +15,7 @@ public interface RecordRepository extends CrudRepository<Record, Long> {
 
     List<Record> getRecordByLocationIdAndStatusOrderByCreateDate(Long locationId,String status);
 
+
+
     long  countByLocationIdAndStatusAndCreateDateBetween(Long locationId, String status, Date createDate, Date createDate2);
 }
