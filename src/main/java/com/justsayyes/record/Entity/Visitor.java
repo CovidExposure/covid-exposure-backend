@@ -27,7 +27,6 @@ public class Visitor {
     @Column
     String status;
 
-
     @Column
     private Date updateDate;
 

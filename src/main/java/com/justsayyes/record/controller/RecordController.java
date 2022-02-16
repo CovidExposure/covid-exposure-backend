@@ -103,5 +103,19 @@ public class RecordController {
         return applicationContext.getBean(RecordService.class).getHeatMapBetween(heatMapRequestDTO.getStart(),heatMapRequestDTO.getEnd());
     }
 
+    @ApiOperation(value = "get daily cases")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "ok", response = DailyCasesRetDTO.class),
+            @ApiResponse(code = 400, message = "bad request", response = DailyCasesRetDTO.class)
+    })
+    @RequestMapping(
+            value = "/getDailyCases",
+            method = {RequestMethod.POST},
+            produces = "application/json;charset=UTF-8"
+    )
+    public ResponseEntity<?> getDailyCases(@RequestBody DailyCasesDTO dailyCasesDTO) {
+
+    }
+
 
 }

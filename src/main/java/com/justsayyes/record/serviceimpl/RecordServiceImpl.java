@@ -52,9 +52,13 @@ public class RecordServiceImpl implements RecordService {
         if(!v.isPresent())return new ResponseEntity<>(false,HttpStatus.BAD_REQUEST);
         Visitor visitor=v.get();
         visitor.setStatus(statusDTO.getStatus());
+        Date d=new Date();
+        if(!statusDTO.getTimestamp().equals("")){
+            d=new Date(Long.parseLong(statusDTO.getTimestamp()));
+        }
+        visitor.setUpdateDate(d);
         applicationContext.getBean(VisitorRepository.class).save(visitor);
-        return new ResponseEntity<>(getExposureList(statusDTO.getEmail()),HttpStatus.OK);
-
+        return new ResponseEntity<>(getExposureList(statusDTO.getEmail(),d),HttpStatus.OK);
     }
 
     @Override
@@ -91,7 +95,7 @@ public class RecordServiceImpl implements RecordService {
     }
 
     @Override
-    public void setSelfRecord(String email) {
+    public void setSelfRecord(String email,Date d) {
         List<String> ans=new ArrayList<>();
         Optional<Visitor> v=applicationContext.getBean(VisitorRepository.class).findById(email);
         if(!v.isPresent()) return;
@@ -99,8 +103,7 @@ public class RecordServiceImpl implements RecordService {
         List<Record> records=visitor.getRecords();
         records.sort(Comparator.comparing(Record::getCreateDate));
         for(int i=records.size()-1;i>=0;i--){
-            Date now=new Date();
-            if(now.getTime()-records.get(i).getCreateDate().getTime()>=15 * 60 * 60 * 24*1000){
+            if(d.getTime()-records.get(i).getCreateDate().getTime()>=15 * 60 * 60 * 24*1000){
                 break;
             }
             records.get(i).setStatus("ACTIVE");
@@ -110,7 +113,7 @@ public class RecordServiceImpl implements RecordService {
     }
 
     @Override
-    public List<String> getExposureList(String email) {
+    public List<String> getExposureList(String email,Date d) {
         List<String> ans=new ArrayList<>();
         Optional<Visitor> v=applicationContext.getBean(VisitorRepository.class).findById(email);
         if(!v.isPresent()) return ans;
@@ -119,22 +122,34 @@ public class RecordServiceImpl implements RecordService {
         records.sort(Comparator.comparing(Record::getCreateDate));
         Set<Long> locationIds=new HashSet<>();
         for(int i=records.size()-1;i>=0;i--){
-            Date now=new Date();
-            if(now.getTime()-records.get(i).getCreateDate().getTime()>=15 * 60 * 60 * 24*1000){
+            if(d.getTime()-records.get(i).getCreateDate().getTime()>=15 * 60 * 60 * 24*1000){
                 break;
             }
             locationIds.add(records.get(i).getLocationId());
         }
         List<Record> exposed=applicationContext.getBean(RecordRepository.class)
-                .getRecordByLocationIdInAndCreateDateBetween(locationIds,new Date(new Date().getTime()-15 * 60 * 60 * 24*1000),new Date());
+                .getRecordByLocationIdInAndCreateDateBetween(locationIds,new Date(d.getTime()-15 * 60 * 60 * 24*1000),d);
         Set<String> names=new HashSet<>();
         for(Record r:exposed){
             r.setStatus("EXPOSED");
             applicationContext.getBean(RecordRepository.class).save(r);
             names.add(r.getVisitor().getEmail());
         }
-        setSelfRecord(email);
+        setSelfRecord(email,d);
         return new ArrayList<>(names);
+
+    }
+
+    @Override
+    public ResponseEntity<?> getDailyCases(DailyCasesDTO dailyCasesDTO) {
+        int cnt=0;
+        for(Visitor v:applicationContext.getBean(VisitorRepository.class).findAll()){
+            if(v.getStatus().equals("ACTIVE")){
+                cnt++;
+            }
+        }
+
+
 
     }
 }
