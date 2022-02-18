@@ -114,7 +114,7 @@ public class RecordController {
             produces = "application/json;charset=UTF-8"
     )
     public ResponseEntity<?> getDailyCases(@RequestBody DailyCasesDTO dailyCasesDTO) {
-
+        return applicationContext.getBean(RecordService.class).getDailyCases(dailyCasesDTO);
     }
 
 
