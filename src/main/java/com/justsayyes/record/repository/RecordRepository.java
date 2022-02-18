@@ -20,11 +20,11 @@ public interface RecordRepository extends CrudRepository<Record, Long> {
 
     long  countByLocationIdAndStatusAndCreateDateBetween(Long locationId, String status, Date createDate, Date createDate2);
 
-    @Query(value = "select count(record)from Record record where record.locationId in (:locations) and record.status=:status group by record.visitor")
+    @Query(value = "select count(distinct record.visitor)from Record record where record.locationId in (:locations) and record.status=:status")
     long getActiveCasesAroundYou(List<Long> locations, String status);
 
-    @Query(value = "select count(record)from Record record where record.locationId in (:locations) and record.status=:status and " +
-            "record.createDate between (:createDate) and (:createDate2) group by record.visitor")
+    @Query(value = "select count(distinct record.visitor)from Record record where record.locationId in (:locations) and record.status=:status and " +
+            "record.createDate between (:createDate) and (:createDate2)")
     long getActiveCasesAroundYouYesterday(List<Long> locations, String status, Date createDate, Date createDate2);
 
 }
