@@ -8,6 +8,8 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -36,6 +38,11 @@ public class Location {
     private String state;
     @Column
     private BigDecimal zipcode;
+    @OneToMany(mappedBy = "location",cascade = CascadeType.ALL)
+    private List<Status> statuses=new ArrayList<>();
+
+    @OneToMany(mappedBy = "location",cascade = CascadeType.ALL)
+    private List<Record> records=new ArrayList<>();
 
     public Location(LocationInfoDTO locationInfoDTO){
         this.latitude=BigDecimal.valueOf(Double.parseDouble(locationInfoDTO.getLatitude()));

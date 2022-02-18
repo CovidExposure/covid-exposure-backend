@@ -24,12 +24,9 @@ public class Visitor {
     @Column(nullable = false)
     String email;
 
-    @Column
-    String status;
-
-    @Column
-    private Date updateDate;
-
-    @OneToMany(mappedBy = "visitor")
+    @OneToMany(mappedBy = "visitor",cascade = CascadeType.ALL)
     private List<Record> records=new ArrayList<>();
+
+    @OneToMany(mappedBy = "visitor",cascade = CascadeType.ALL)
+    private List<Status> statuses=new ArrayList<>();
 }

@@ -13,8 +13,6 @@ public interface RecordService {
     ResponseEntity<?> uploadRecord(RecordDTO recordDTO);
     ResponseEntity<?> uploadStatus(StatusDTO statusDTO);
     ResponseEntity<?> getHeatMap(String keyword);
-    ResponseEntity<?> getHeatMapBetween(Long start,Long end);
-    void setSelfRecord(String email, Date d);
     List<String> getExposureList(String email,Date d);
     ResponseEntity<?> getDailyCases(DailyCasesDTO dailyCasesDTO);
     ResponseEntity<?> getStatus(GetStatusDTO getStatusDTO);

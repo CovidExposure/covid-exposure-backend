@@ -89,20 +89,6 @@ public class RecordController {
         return applicationContext.getBean(RecordService.class).getHeatMap("EXPOSED");
     }
 
-    @ApiOperation(value = "getHeapMap between , active cases numbers for every location")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "ok", response = HeatMapDTO.class),
-            @ApiResponse(code = 400, message = "bad request", response = HeatMapDTO.class)
-    })
-    @RequestMapping(
-            value = "/getHeatMapBetween",
-            method = {RequestMethod.POST},
-            produces = "application/json;charset=UTF-8"
-    )
-    public ResponseEntity<?> getHeatMapBetween(@RequestBody HeatMapRequestDTO heatMapRequestDTO) {
-        return applicationContext.getBean(RecordService.class).getHeatMapBetween(heatMapRequestDTO.getStart(),heatMapRequestDTO.getEnd());
-    }
-
     @ApiOperation(value = "get daily cases")
     @ApiResponses({
             @ApiResponse(code = 200, message = "ok", response = DailyCasesRetDTO.class),
