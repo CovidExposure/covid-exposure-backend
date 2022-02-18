@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DailyCasesRetDTO {
-    private String status;
     private Integer activeCases;
     private Integer activeCasesAroundYou;
     private Integer activeCasesYesterday;

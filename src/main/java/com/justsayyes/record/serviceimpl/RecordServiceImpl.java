@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 @Service
@@ -142,14 +143,26 @@ public class RecordServiceImpl implements RecordService {
 
     @Override
     public ResponseEntity<?> getDailyCases(DailyCasesDTO dailyCasesDTO) {
-        int cnt=0;
+        int activeCases=0;
+        int activeCasesYesterday=0;
+        Date now=new Date();
         for(Visitor v:applicationContext.getBean(VisitorRepository.class).findAll()){
             if(v.getStatus().equals("ACTIVE")){
-                cnt++;
+                if(now.getTime()-v.getUpdateDate().getTime()<=24*60*60*1000){
+                    activeCasesYesterday++;
+                }
+                activeCases++;
             }
         }
+        double lo=Double.parseDouble(dailyCasesDTO.getLongitude());
+        double la=Double.parseDouble(dailyCasesDTO.getLatitude());
+        List<Long> locations=applicationContext.getBean(LocationRepository.class).getNearByLocation(BigDecimal.valueOf(lo-0.05),BigDecimal.valueOf(lo+0.05),BigDecimal.valueOf(la-0.05),BigDecimal.valueOf(la+0.05));
+
+        int activeCasesAroundYou= (int) applicationContext.getBean(RecordRepository.class).getActiveCasesAroundYou(locations,"ACTIVE");
+        int activeCasesYesterdayAroundYou = (int) applicationContext.getBean(RecordRepository.class).getActiveCasesAroundYouYesterday(locations,"ACTIVE",new Date(now.getTime()-24*60*60*1000),now);
 
 
+        return new ResponseEntity<>(new DailyCasesRetDTO(activeCases,activeCasesYesterday,activeCasesAroundYou,activeCasesYesterdayAroundYou),HttpStatus.OK);
 
     }
 }
