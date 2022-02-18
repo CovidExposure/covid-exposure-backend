@@ -23,4 +23,11 @@ public interface StatusRepository extends CrudRepository<Status, Long> {
 
     @Query(value = "select status from Status status where status.visitor=:v order by status.createDate")
     List<Status> getLatestStatus(Visitor v);
+
+    @Query(value = "select count(status) from Status status where status.location in :locations and status.content=:keyword")
+    long getActiveCasesAroundYou(List<Location> locations,String keyword);
+
+    @Query(value = "select count(status) from Status status where status.location in :locations and status.content=:keyword and status.createDate between :createDate and :createDate2")
+    long getActiveCasesAroundYouYesterday(List<Location> locations,String keyword, Date createDate, Date createDate2);
+
 }

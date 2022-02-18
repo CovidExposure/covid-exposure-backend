@@ -130,9 +130,9 @@ public class RecordServiceImpl implements RecordService {
         List<Location> locations=applicationContext.getBean(LocationRepository.class).getNearByLocation(BigDecimal.valueOf(lo-0.05),BigDecimal.valueOf(lo+0.05),BigDecimal.valueOf(la-0.05),BigDecimal.valueOf(la+0.05));
         int activeCasesYesterday=(int) applicationContext.getBean(StatusRepository.class).getActiveCasesYesterday("ACTIVE",new Date(now.getTime()-24*60*60*1000),now);
 
-//        int activeCasesAroundYou= (int) applicationContext.getBean(RecordRepository.class).getActiveCasesAroundYou(locations,"ACTIVE");
-//        int activeCasesYesterdayAroundYou = (int) applicationContext.getBean(RecordRepository.class).getActiveCasesAroundYouYesterday(locations,"ACTIVE",new Date(now.getTime()-24*60*60*1000),now);
-        return new ResponseEntity<>(new DailyCasesRetDTO(activeCases,activeCasesYesterday,0,0),HttpStatus.OK);
+        int activeCasesAroundYou= (int) applicationContext.getBean(StatusRepository.class).getActiveCasesAroundYou(locations,"ACTIVE");
+        int activeCasesYesterdayAroundYou = (int) applicationContext.getBean(StatusRepository.class).getActiveCasesAroundYouYesterday(locations,"ACTIVE",new Date(now.getTime()-24*60*60*1000),now);
+        return new ResponseEntity<>(new DailyCasesRetDTO(activeCases,activeCasesAroundYou,activeCasesYesterday,activeCasesYesterdayAroundYou),HttpStatus.OK);
 
     }
 
