@@ -117,5 +117,18 @@ public class RecordController {
         return applicationContext.getBean(RecordService.class).getDailyCases(dailyCasesDTO);
     }
 
+    @ApiOperation(value = "get status")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "ok", response = DailyCasesRetDTO.class),
+            @ApiResponse(code = 400, message = "bad request", response = DailyCasesRetDTO.class)
+    })
+    @RequestMapping(
+            value = "/getStatus",
+            method = {RequestMethod.POST},
+            produces = "application/json;charset=UTF-8"
+    )
+    public ResponseEntity<?> getStatus(@RequestBody GetStatusDTO getStatusDTO) {
+        return applicationContext.getBean(RecordService.class).getStatus(getStatusDTO);
+    }
 
 }

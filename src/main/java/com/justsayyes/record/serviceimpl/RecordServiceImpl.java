@@ -165,4 +165,10 @@ public class RecordServiceImpl implements RecordService {
         return new ResponseEntity<>(new DailyCasesRetDTO(activeCases,activeCasesYesterday,activeCasesAroundYou,activeCasesYesterdayAroundYou),HttpStatus.OK);
 
     }
+
+    @Override
+    public ResponseEntity<?> getStatus(GetStatusDTO getStatusDTO) {
+        Optional<Visitor> v=applicationContext.getBean(VisitorRepository.class).findById(getStatusDTO.getEmail());
+        return v.map(visitor -> new ResponseEntity<>(visitor.getStatus(), HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>("", HttpStatus.BAD_REQUEST));
+    }
 }

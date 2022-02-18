@@ -1,9 +1,6 @@
 package com.justsayyes.record.service;
 
-import com.justsayyes.record.DTO.DailyCasesDTO;
-import com.justsayyes.record.DTO.LocationInfoDTO;
-import com.justsayyes.record.DTO.RecordDTO;
-import com.justsayyes.record.DTO.StatusDTO;
+import com.justsayyes.record.DTO.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -20,5 +17,7 @@ public interface RecordService {
     void setSelfRecord(String email, Date d);
     List<String> getExposureList(String email,Date d);
     ResponseEntity<?> getDailyCases(DailyCasesDTO dailyCasesDTO);
+    ResponseEntity<?> getStatus(GetStatusDTO getStatusDTO);
+
 
 }
