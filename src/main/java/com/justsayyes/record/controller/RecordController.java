@@ -105,8 +105,8 @@ public class RecordController {
 
     @ApiOperation(value = "get status")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "ok", response = DailyCasesRetDTO.class),
-            @ApiResponse(code = 400, message = "bad request", response = DailyCasesRetDTO.class)
+            @ApiResponse(code = 200, message = "ok", response = String.class),
+            @ApiResponse(code = 400, message = "bad request", response = String.class)
     })
     @RequestMapping(
             value = "/getStatus",
