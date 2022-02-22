@@ -9,12 +9,14 @@ import com.justsayyes.record.repository.LocationRepository;
 import com.justsayyes.record.repository.RecordRepository;
 import com.justsayyes.record.repository.StatusRepository;
 import com.justsayyes.record.repository.VisitorRepository;
+import com.justsayyes.record.service.EmailService;
 import com.justsayyes.record.service.RecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -108,9 +110,16 @@ public class RecordServiceImpl implements RecordService {
         for(Record temp:exposed){
             ret.add(temp.getVisitor().getEmail());
             setStatus(temp.getVisitor(),"EXPOSED",temp.getCreateDate(),temp.getLocation());
+            send_email(temp.getVisitor().getEmail(),"You were exposed at "+temp.getCreateDate().toString()+" Get tested soon");
         }
         return ret;
     }
+
+    @Async
+    void send_email(String target,String content){
+        applicationContext.getBean(EmailService.class).sendSimpleMessage(target,"Covid Exposure alert",content);
+    }
+
 
     private void setStatus(Visitor v,String content, Date d,Location location){
         Status status=new Status();

@@ -1,11 +1,13 @@
 package com.justsayyes.record.controller;
 import com.justsayyes.record.DTO.*;
+import com.justsayyes.record.service.EmailService;
 import com.justsayyes.record.service.RecordService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.web.bind.annotation.*;
@@ -115,6 +117,21 @@ public class RecordController {
     )
     public ResponseEntity<?> getStatus(@RequestBody GetStatusDTO getStatusDTO) {
         return applicationContext.getBean(RecordService.class).getStatus(getStatusDTO);
+    }
+
+    @ApiOperation(value = "testEmail")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "ok", response = String.class),
+            @ApiResponse(code = 400, message = "bad request", response = String.class)
+    })
+    @RequestMapping(
+            value = "/testEmail",
+            method = {RequestMethod.GET},
+            produces = "application/json;charset=UTF-8"
+    )
+    public ResponseEntity<?> testEmail() {
+        applicationContext.getBean(EmailService.class).sendSimpleMessage("coredroid0401@gmail.com","test IMAP","COVID EXPOSED");
+        return new ResponseEntity<>("0", HttpStatus.OK);
     }
 
 }
