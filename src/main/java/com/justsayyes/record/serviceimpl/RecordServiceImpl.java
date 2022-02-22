@@ -117,6 +117,7 @@ public class RecordServiceImpl implements RecordService {
 
     @Async
     void send_email(String target,String content){
+        if(!target.contains("@gmail.com")) return;
         applicationContext.getBean(EmailService.class).sendSimpleMessage(target,"Covid Exposure alert",content);
     }
 
