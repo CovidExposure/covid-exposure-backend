@@ -22,6 +22,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.*;
 
 @Service
@@ -153,5 +154,16 @@ public class RecordServiceImpl implements RecordService {
         List<Status> statuses=applicationContext.getBean(StatusRepository.class).getLatestStatus(v.get());
         if(statuses.size()==0) return new ResponseEntity<>("UNKNOWN",HttpStatus.OK);
         return new ResponseEntity<>(statuses.get(statuses.size()-1).getContent(),HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<?> getCasesByDate() {
+        List<Object[]> ans=applicationContext.getBean(StatusRepository.class).getCasesByDay("ACTIVE");
+        getCasesByDayDTO ret=new getCasesByDayDTO();
+        for(Object[] o:ans){
+            ret.getData().add(new getCasesByDayDetailDTO(o[0].toString(), o[1].toString()));
+
+        }
+        return new ResponseEntity<>(ret,HttpStatus.OK);
     }
 }

@@ -134,4 +134,17 @@ public class RecordController {
         return new ResponseEntity<>("0", HttpStatus.OK);
     }
 
+    @ApiOperation(value = "getCasesByDay")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "ok", response = getCasesByDayDTO.class),
+            @ApiResponse(code = 400, message = "bad request", response = getCasesByDayDTO.class)
+    })
+    @RequestMapping(
+            value = "/getCasesByDay",
+            method = {RequestMethod.GET},
+            produces = "application/json;charset=UTF-8"
+    )
+    public ResponseEntity<?> getCasesByDay() {
+        return new ResponseEntity<>(applicationContext.getBean(RecordService.class).getCasesByDate(), HttpStatus.OK);
+    }
 }

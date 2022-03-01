@@ -30,4 +30,8 @@ public interface StatusRepository extends CrudRepository<Status, Long> {
     @Query(value = "select count(status) from Status status where status.location in :locations and status.content=:keyword and status.createDate between :createDate and :createDate2")
     long getActiveCasesAroundYouYesterday(List<Location> locations,String keyword, Date createDate, Date createDate2);
 
+    @Query(value = "SELECT COUNT(DISTINCT visitor_email) totalCount, DATE(create_date) date FROM status WHERE content=?1 GROUP BY DATE(create_date) ORDER BY DATE(create_date)", nativeQuery = true)
+    List<Object[]> getCasesByDay(String content);
+
+
 }

@@ -16,6 +16,7 @@ public interface RecordService {
     List<String> getExposureList(String email,Date d);
     ResponseEntity<?> getDailyCases(DailyCasesDTO dailyCasesDTO);
     ResponseEntity<?> getStatus(GetStatusDTO getStatusDTO);
+    ResponseEntity<?> getCasesByDate();
 
 
 }
