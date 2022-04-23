@@ -1,0 +1,21 @@
+version: "0.0.1"
+services:
+  covid-exposure-backend:
+    image: covid-exposure-backend
+    ports:
+      - "8080:8080"
+    # networks:
+    #   - covid-exposure
+    depends_on:
+      - mysqldb
+ 
+  mysqldb:
+    image: mysql:8
+    # networks:
+    #   - covid-exposure
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+      MYSQL_ROOT_PASSWORD: ''
+
+# networks:
+#   covid-exposure: 
