@@ -9,4 +9,5 @@ import org.springframework.stereotype.Service;
 public interface BusinessService {
     ResponseEntity<?> getBusinessComments(long business_id);
     ResponseEntity<?> putBusinessComments(long business_id, UserCommentDTO userCommentDTO);
+    ResponseEntity<?> getBusinessCovidStatistics(long business_id);
 }
