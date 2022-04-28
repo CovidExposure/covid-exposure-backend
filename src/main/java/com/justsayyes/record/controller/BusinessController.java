@@ -50,4 +50,17 @@ public class BusinessController {
         return applicationContext.getBean(BusinessService.class).putBusinessComments(business_id, userCommentDTO);
     }
 
+    @ApiOperation(value = "Get business covid statistics")
+    @ApiResponses({
+        @ApiResponse(code = 200, message = "ok", response = StatusDTO.class, responseContainer = "List"),
+        @ApiResponse(code = 400, message = "bad request", response = String.class)
+    })
+    @RequestMapping(
+            value = "/{business_id}/statistics",
+            method = {RequestMethod.GET},
+            produces = "application/json;charset=UTF-8"
+    )
+    public ResponseEntity<?> getBusinessCovidStatistics(@PathVariable("business_id") long business_id) {
+        return applicationContext.getBean(BusinessService.class).getBusinessCovidStatistics(business_id);
+    }
 }

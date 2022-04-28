@@ -33,5 +33,6 @@ public interface StatusRepository extends CrudRepository<Status, Long> {
     @Query(value = "SELECT COUNT(DISTINCT visitor_email) totalCount, DATE(create_date) date FROM status WHERE content=?1 GROUP BY DATE(create_date) ORDER BY DATE(create_date)", nativeQuery = true)
     List<Object[]> getCasesByDay(String content);
 
-
+    @Query(value = "select status from Status status where status.location=:l and status.createDate between :createDate and :createDate2 order by status.createDate")
+    List<Status> getLocationStatusByDate(Location l, Date createDate, Date createDate2);
 }
