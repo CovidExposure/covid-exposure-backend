@@ -9,3 +9,4 @@ $ docker build . -t covid-exposure-backend
 ```
 $ docker-compose up
 ```
+API docs (dev): http://localhost:8080/swagger-ui.html
